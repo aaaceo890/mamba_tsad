@@ -18,7 +18,7 @@ to install the required packages.
 
 ### Data Preparation
 
-Download the datasets (`datasets.zip`) here: [[datasets.zip](https://mailnwpueducn-my.sharepoint.com/:u:/g/personal/jqchen_mail_nwpu_edu_cn/EVJZQ3fmAPpGjQryQ6RVZaIBX5qY-SBt-30Q2C9zR2AkDA?e=f7lHbq))]
+The datasets are provided in `datasets.zip` in the root directory of this repository.
 
 Unzip the datasets into `./datasets` directory:
 
