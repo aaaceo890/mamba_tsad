@@ -3,6 +3,13 @@
 This respository is the official implementation of "[Joint Selective State Space Model and Detrending for Robust Time Series Anomaly Detection](https://ieeexplore.ieee.org/document/10623192/)" for SPL 2024. 
 
 
+## 🚀 New Work
+
+Our new work **AnoMamba** has been accepted to **IJCAI 2026**!
+
+AnoMamba aligns reconstruction with time series anomaly detection through selective global dependency modeling.
+
+📄 [Paper](https://www.ijcai.org/proceedings/2026/276) · 💻 [Code](https://github.com/aaaceo890/AnoMamba_ijcai)
 
 ### Installation
 
