@@ -96,6 +96,21 @@ def step_zx_sym_part(L, D, z):
     return x_update, L_append, z_append
 
 
+# In-memory cache of the LDL^T factorization of A. A depends only on (warm_up_step, lam)
+# and not on the data, so it is factorized once instead of on every batch.
+# The output is bit-identical to recomputing it.
+_LD_CACHE = {}
+
+
+def _get_ALD(m, lam1, lam2, device):
+    key = (m, float(lam1), float(lam2), str(device))
+    if key not in _LD_CACHE:
+        A = construct_A2(m, lam1=lam1, lam2=lam2, device=device)
+        L, D = symmetric_df(A)
+        _LD_CACHE[key] = (A, L, D)
+    return _LD_CACHE[key]
+
+
 def hp_filter(y, lam=1.0, warm_up_step=5, hidden=None):
     # y -> (B, T)
     bsz, T = y.shape
@@ -103,9 +118,7 @@ def hp_filter(y, lam=1.0, warm_up_step=5, hidden=None):
     if hidden is None:
         assert 5 <= warm_up_step <= T
         # warm up
-        A = construct_A2(warm_up_step, lam1=lam, lam2=lam, device=device)
-        # A = construct_A(warm_up_step, lam=lam, device=device)
-        L, D = symmetric_df(A)
+        A, L, D = _get_ALD(warm_up_step, lam, lam, device)
         I1, z = gaussian_eliminate_L(L, y[:, :warm_up_step])
         zs_invd = 1 / D * z
         I2, x = gaussian_eliminate_U(L.T, zs_invd)
